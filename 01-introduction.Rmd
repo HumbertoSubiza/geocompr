@@ -112,11 +112,11 @@ rowMeans(b)
 
 ```{r interactive, fig.cap="Where the authors are from. The basemap is a tiled image of the Earth at Night provided by NASA. Interact with the online version at robinlovelace.net/geocompr, for example by zooming-in and clicking on the popups.", out.width="100%"}
 library(leaflet)
-popup = c("Robin", "Jakub", "Jannes")
+popup = c("Robin", "Jakub", "Jannes", "Beto")
 leaflet() %>%
   addProviderTiles("NASAGIBS.ViirsEarthAtNight2012") %>% 
-  addAwesomeMarkers(lng = c(-3, 23, 11),
-                    lat = c(52, 53, 49), 
+  addAwesomeMarkers(lng = c(-3, 23, 11, -9.34),
+                    lat = c(52, 53, 49, 38.93), 
                     popup = popup)
 ```
 

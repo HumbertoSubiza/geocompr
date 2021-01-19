@@ -3,15 +3,15 @@ library(dplyr)
 #
 
 ## primeiro arquivo
-path <- 'C:/Users/Walter Pina/Documents/bases/Cadastro de localidades/capitais.shp'
+path <- 'C:/Users/Walter Pina/Documents/bases/Cadastro de localidades/br_capitais.shp'
 capitais <- read_sf(path) # le capitais com sf
 
 # cria identificacao com numeracao sequencial
 capitais$id <- seq(1,27,1)
-colnames(capitais) <- c("name","geometry","id")
+colnames(capitais) <- c("name","sigla_uf","geometry","id")
 
 ## segundo arquivo
-path2 <- 'C:/Users/Walter Pina/Documents/bases/br_uf_2019.shp'
+path2 <- 'C:/Users/Walter Pina/Documents/bases/br_uf.shp'
 brasil <- read_sf(path2) # le capitais com sf
 
 brasil$gid <- seq(28,54,1)
@@ -30,14 +30,15 @@ plot(brasil_simples["gid"])
 ## criacao geometria
 # geometria
 br_geom <- st_geometry(brasil_simples, value = NULL)
-st_crs(br_geom) <- 4326
+br_geom 
 
 # geometrias, extrai e define crs
 cap_geom <- st_geometry(capitais, value = NULL)
-cap_geom <- st_transform(cap_geom, 4326)
+cap_geom
 
-# cria  geometry collection a partir de objetos sfg
+# cria  geometry collection a partir de objetos sfg, o mesmo CRS
 br_geom_coll <- c(st_geometrycollection(cap_geom), st_geometrycollection(br_geom ))
+
 .......
 
 plot(br_geom, reset = F, lwd =3, axes =T)
@@ -107,5 +108,14 @@ br_uf  <- st_collection_extract(
         brasil_geom_coll_db,
         type = c("POLYGON"),
         warn = FALSE)
+
+br_cap  <- st_collection_extract(
+        brasil_geom_coll_db,
+        type = c("POINT"),
+        warn = FALSE)
+
+
 plot(br_uf["id"], axes = T, lwd =3)
+
+plot(br_cap["id"], axes = T, lwd =3)
 
